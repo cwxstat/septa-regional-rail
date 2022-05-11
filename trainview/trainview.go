@@ -7,27 +7,13 @@ import (
 	"time"
 
 	"github.com/cwxstat/septa-regional-rail/dbutils"
+	"github.com/cwxstat/septa-regional-rail/types"
 	"github.com/cwxstat/septa-regional-rail/dbutils/db"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type TrainView []struct {
-	Lat         string  `json:"lat" bson:"lat"`
-	Lon         string  `json:"lon" bson:"lon"`
-	Trainno     string  `json:"trainno" bson:"trainno"`
-	Service     string  `json:"service" bson:"service"`
-	Dest        string  `json:"dest" bson:"dest"`
-	Currentstop string  `json:"currentstop" bson:"currentstop"`
-	Nextstop    string  `json:"nextstop" bson:"nextstop"`
-	Line        string  `json:"line" bson:"line"`
-	Consist     string  `json:"consist" bson:"consist"`
-	Heading     float64 `json:"heading" bson:"heading"`
-	Late        int     `json:"late" bson:"late"`
-	Source      string  `json:"SOURCE" bson:"SOURCE"`
-	Track       string  `json:"TRACK" bson:"TRACK"`
-	TrackChange string  `json:"TRACK_CHANGE" bson:"TRACK_CHANGE"`
-}
+
 
 type Return struct {
 	ID string `json:"_id" bson:"_id"`
@@ -45,7 +31,7 @@ type Returns struct {
 // ActiveSeptaEntry represents the message object returned in the API.
 type ActiveSeptaEntry struct {
 	MainWebPage string    `json:"mainWebPage" bson:"mainWebPage"`
-	TrainView   TrainView `json:"trainview" bson:"trainview"`
+	TrainView   types.TrainView `json:"trainview" bson:"trainview"`
 	Message     string    `json:"message" bson:"message"`
 	TimeStamp   time.Time `json:"date" bson:"date"`
 }

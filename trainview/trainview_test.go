@@ -2,15 +2,18 @@ package trainview
 
 import (
 	"context"
-
 	"fmt"
+	"reflect"
 	"testing"
 	"time"
 
+	"github.com/cwxstat/septa-regional-rail/constants"
 	"github.com/cwxstat/septa-regional-rail/dbutils"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/cwxstat/septa-regional-rail/hydrate"
+	//"github.com/cwxstat/septa-regional-rail/types"
+
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+
 )
 
 func TestFull(t *testing.T) {
@@ -21,86 +24,34 @@ func TestFull(t *testing.T) {
 		t.FailNow()
 	}
 
-	as.DatabaseCollection("test", "test")
+	as.DatabaseCollection("testSepta", "trainView")
 
-	iwebp := []IncidentWebPage{
-		IncidentWebPage{
-			Page: "Page1",
-		},
-		IncidentWebPage{
-			Page: "Page2",
-		},
-	}
-
-	incident1 := Incident{
-		IncidentNo:      "1",
-		IncidentType:    "test",
-		IncidentSubTupe: "",
-		Location:        "",
-		Municipality:    "",
-		DispatchTime:    "",
-		Station:         "",
-		IncidentStatus:  []IncidentStatus{},
-	}
-
-	incident2 := Incident{
-		IncidentNo:      "2",
-		IncidentType:    "test",
-		IncidentSubTupe: "",
-		Location:        "",
-		Municipality:    "",
-		DispatchTime:    "",
-		Station:         "",
-		IncidentStatus:  []IncidentStatus{},
-	}
-
-	err = as.db.AddEntry(ctx, ActiveSeptaEntry{
-		MainWebPage:      "Main",
-		IncidentWebPages: iwebp,
-		Incidents:        []Incident{incident1, incident2},
-		Message:          "Test Message",
-		TimeStamp:        dbutils.NYtime(),
-	})
+	page, err := hydrate.Grab(constants.TRAINVIEW)
 	if err != nil {
 		t.FailNow()
 	}
-	opts := options.Find().SetProjection(bson.D{
-		{"incidents", 1},
-		{"date", -1},
-		{"_id", 1},
-	})
-	cur, err := as.db.EntriesMinutesAgo(ctx, 1, opts)
+	trainview, err := hydrate.Hydrate(page)
 	if err != nil {
 		t.FailNow()
 	}
-	defer cur.Close(ctx)
-	var out []Return
-	for cur.Next(ctx) {
-		var v Return
-		if err := cur.Decode(&v); err != nil {
-			t.Error(err)
-
-		}
-		out = append(out, v)
-	}
-	if err := cur.Err(); err != nil {
-		t.Error(err)
+	data := &ActiveSeptaEntry{
+		MainWebPage: string(page),
+		TrainView:   *trainview,
+		Message:     "",
+		TimeStamp:   time.Now(),
 	}
 
-	if out[0].Incidents[1].IncidentNo != "2" {
-		t.Fatalf("Didn't get correct value back. Expected 2, got: %+v\n", out[1].Incidents[1].IncidentNo)
-	}
 
-	err = as.db.DeleteAll(ctx, "Test Message")
+
+	err = as.AddEntry(ctx, data)
 	if err != nil {
 		t.FailNow()
 	}
 
-	err = as.db.Disconnect(ctx)
-	if err != nil {
-		t.FailNow()
-	}
+}
 
+func Grab(s string) {
+	panic("unimplemented")
 }
 
 func TestConn(t *testing.T) {
@@ -169,6 +120,32 @@ func TestNewActiveIncidentServer(t *testing.T) {
 				fmt.Println(result)
 			} else {
 				t.Errorf("failure")
+			}
+		})
+	}
+}
+
+func TestNewTrainViewServer(t *testing.T) {
+	type args struct {
+		ctx context.Context
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    *trainViewServer
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := NewTrainViewServer(tt.args.ctx)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("NewTrainViewServer() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewTrainViewServer() = %v, want %v", got, tt.want)
 			}
 		})
 	}

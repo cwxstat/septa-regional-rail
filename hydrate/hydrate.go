@@ -3,12 +3,12 @@ package hydrate
 import (
 	"encoding/json"
 	"github.com/cwxstat/septa-regional-rail/get"
-	"github.com/cwxstat/septa-regional-rail/trainview"
+	"github.com/cwxstat/septa-regional-rail/types"
 )
 
-func Hydrate(b []byte) (*trainview.TrainView, error) {
+func Hydrate(b []byte) (*types.TrainView, error) {
 
-	trainView := &trainview.TrainView{}
+	trainView := &types.TrainView{}
 	if err := json.Unmarshal(b, &trainView); err != nil {
 		return nil, err
 	}
