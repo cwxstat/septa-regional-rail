@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/cwxstat/septa-regional-rail/dbutils"
-	"github.com/cwxstat/septa-regional-rail/types"
+	"github.com/cwxstat/septa-regional-rail/hydrate"
 	"github.com/cwxstat/septa-regional-rail/dbutils/db"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -31,7 +31,7 @@ type Returns struct {
 // ActiveSeptaEntry represents the message object returned in the API.
 type ActiveSeptaEntry struct {
 	MainWebPage string    `json:"mainWebPage" bson:"mainWebPage"`
-	TrainView   types.TrainView `json:"trainview" bson:"trainview"`
+	TrainView   hydrate.TrainView `json:"trainview" bson:"trainview"`
 	Message     string    `json:"message" bson:"message"`
 	TimeStamp   time.Time `json:"date" bson:"date"`
 }
