@@ -3,7 +3,6 @@ package hydrate
 import (
 	"encoding/json"
 	"github.com/cwxstat/septa-regional-rail/get"
-
 )
 
 type TrainView []struct {

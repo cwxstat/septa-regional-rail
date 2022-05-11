@@ -13,7 +13,6 @@ import (
 	//"github.com/cwxstat/septa-regional-rail/types"
 
 	"go.mongodb.org/mongo-driver/mongo"
-
 )
 
 func TestFull(t *testing.T) {
@@ -40,8 +39,6 @@ func TestFull(t *testing.T) {
 		Message:     "",
 		TimeStamp:   time.Now(),
 	}
-
-
 
 	err = as.AddEntry(ctx, data)
 	if err != nil {
