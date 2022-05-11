@@ -54,7 +54,7 @@ func TestFull(t *testing.T) {
 		IncidentStatus:  []IncidentStatus{},
 	}
 
-	err = as.db.AddEntry(ctx, ActiveIncidentEntry{
+	err = as.db.AddEntry(ctx, ActiveSeptaEntry{
 		MainWebPage:      "Main",
 		IncidentWebPages: iwebp,
 		Incidents:        []Incident{incident1, incident2},
