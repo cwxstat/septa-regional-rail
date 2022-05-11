@@ -1,4 +1,4 @@
-package scrape
+package get
 
 import (
 	"errors"
