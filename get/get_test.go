@@ -1,9 +1,11 @@
-package scrape
+package get
 
 import (
 	"fmt"
 	"net/http"
 	"testing"
+
+	"github.com/cwxstat/septa-regional-rail/constants"
 )
 
 func TestGet(t *testing.T) {
@@ -21,7 +23,7 @@ func TestGet(t *testing.T) {
 		{
 			name: "Quick Smoke Test",
 			args: args{
-				url: "https://www3.septa.org/hackathon/TrainView",
+				url: constants.TRAINVIEW,
 			},
 			want:    "",
 			wantErr: false,
