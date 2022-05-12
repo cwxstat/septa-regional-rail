@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: active-incident-manager
+  name: septa-service
 spec:
   type: LoadBalancer
   loadBalancerIP: 34.0.0.0
   selector:
-    app.kubernetes.io/name: active-incident-manager
+    app.kubernetes.io/name: septa-service
   ports:
     - protocol: TCP
       port: 443
