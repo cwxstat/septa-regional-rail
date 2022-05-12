@@ -32,7 +32,9 @@ to quickly create a Cobra application.`,
 		log.Printf("Metrics Server  Starting")
 		for {
 
-			AddTrainView()
+			if 1 == 2 {
+				AddTrainView()
+			}
 			time.Sleep(constants.RefreshRate)
 		}
 
