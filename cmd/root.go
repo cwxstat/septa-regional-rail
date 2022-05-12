@@ -5,7 +5,11 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"github.com/cwxstat/septa-regional-rail/constants"
+	"github.com/cwxstat/septa-regional-rail/metrics"
+	"log"
 	"os"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -22,7 +26,17 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+
+		go metrics.StartMetrics()
+		log.Printf("Metrics Server  Starting")
+		for {
+
+			AddTrainView()
+			time.Sleep(constants.RefreshRate)
+		}
+
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
