@@ -10,7 +10,6 @@ import (
 	"github.com/cwxstat/septa-regional-rail/constants"
 	"github.com/cwxstat/septa-regional-rail/dbutils"
 	"github.com/cwxstat/septa-regional-rail/hydrate"
-	//"github.com/cwxstat/septa-regional-rail/types"
 
 	"go.mongodb.org/mongo-driver/mongo"
 )
