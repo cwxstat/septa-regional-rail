@@ -12,7 +12,7 @@ spec:
         readOnly: false
   containers:
     - name: septa-incident-container
-      image: us-central1-docker.pkg.dev/mchirico/public/septa:v0.0.2
+      image: us-central1-docker.pkg.dev/mchirico/public/septa:v0.0.5
       env:
       - name: MONGO_URI
         valueFrom:
