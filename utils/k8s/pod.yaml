@@ -1,18 +1,18 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: active-incident
+  name: septa-incident
   labels:
-    app.kubernetes.io/name: active-incident
+    app.kubernetes.io/name: septa-incident
 spec:
   volumes:
-    - name: active-incident-data-volume
+    - name: septa-incident-data-volume
       persistentVolumeClaim:
-        claimName: active-incident-storage
-        readOnly: false
+        claimName: septa-incident-storage
+        readOnly: true
   containers:
-    - name: active-incident-container
-      image: us-central1-docker.pkg.dev/mchirico/public/activeincident:v0.1.2
+    - name: septa-incident-container
+      image: us-central1-docker.pkg.dev/mchirico/public/septa:v0.0.1
       env:
       - name: MONGO_URI
         valueFrom:
@@ -35,5 +35,5 @@ spec:
 
       volumeMounts:
         - mountPath: /etc/mongo
-          name: active-incident-data-volume
+          name: septa-incident-data-volume
   restartPolicy: Always
