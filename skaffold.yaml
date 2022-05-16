@@ -3,6 +3,10 @@ kind: Config
 metadata:
   name: septa-regional-rail
 build:
+  tagPolicy:
+    dateTime:
+      format: "2006-01-02_15-04-05.999_DST"
+      timezone: "Local"
   artifacts:
   - image: us-central1-docker.pkg.dev/mchirico/public/septa
 deploy:
