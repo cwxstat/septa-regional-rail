@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: septa-regional-rail
+build:
+  artifacts:
+  - image: us-central1-docker.pkg.dev/mchirico/public/septa
+deploy:
+  kubectl:
+    manifests:
+    - utils/k8s/pod.yaml
+
