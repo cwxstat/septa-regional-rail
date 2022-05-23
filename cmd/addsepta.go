@@ -21,6 +21,7 @@ func AddTrainView() error {
 		return err
 	}
 	ase.DatabaseCollection("Septa", "trainView")
+	defer ase.Disconnect(ctx)
 
 	page, err := hydrate.Grab(constants.TRAINVIEW)
 	if err != nil {
@@ -48,14 +49,6 @@ func AddTrainView() error {
 		return err
 	}
 
-	err = ase.AddEntry(ctx, data)
-	if err != nil {
-		log.Println(err)
-		return err
-	}
-	if err := ase.Disconnect(ctx); err != nil {
-		log.Println("as.Disconnect: ", err)
-	}
 	log.Println("entry added")
 	metrics.RootProcessedLoops()
 	return nil
