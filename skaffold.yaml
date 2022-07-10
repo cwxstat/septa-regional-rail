@@ -9,6 +9,7 @@ build:
       timezone: "Local"
   artifacts:
   - image: us-central1-docker.pkg.dev/mchirico/public/septa
+    ko: {}
 deploy:
   kubectl:
     manifests:
