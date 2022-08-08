@@ -13,6 +13,16 @@ spec:
   containers:
     - name: septa-incident-container
       image: us-central1-docker.pkg.dev/mchirico/public/septa
+      livenessProbe:
+        httpGet:
+          path: /metrics
+          port: 2112
+          scheme: HTTP
+        initialDelaySeconds: 13
+        periodSeconds: 120
+
+
+
       env:
       - name: MONGO_URI
         valueFrom:
