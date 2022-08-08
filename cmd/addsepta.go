@@ -49,7 +49,8 @@ func AddTrainView() error {
 		return err
 	}
 
-	log.Println("entry added")
+	// Only for debugging
+	// log.Println("entry added")
 	metrics.RootProcessedLoops()
 	return nil
 }
