@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: septa-incident
+  name: septa-incident
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: septa-incident
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: septa-incident
+    spec:
+      containers:
+      - image: us-central1-docker.pkg.dev/mchirico/public/septa
+        name: septa-incident-container
+        resources: 
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongo-creds
+              key: mongouri
+        - name: OWM_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mongo-creds
+              key: weatherkey
+        - name: MONGO_WEATHER
+          valueFrom:
+            secretKeyRef:
+              name: mongo-creds
+              key: weathercollection
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: 2112
+            scheme: HTTP
+          initialDelaySeconds: 13
+          periodSeconds: 120
+
+        volumeMounts:
+        - mountPath: /etc/mongo
+          name: septa-incident-data-volume
+      volumes:
+      - name: septa-incident-data-volume
+        persistentVolumeClaim:
+          claimName: septa-incident-storage
+          readOnly: false
+
+        
+

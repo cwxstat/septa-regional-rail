@@ -13,5 +13,5 @@ build:
 deploy:
   kubectl:
     manifests:
-    - utils/k8s/pod.yaml
+    - utils/k8s/deployment.yaml
 
